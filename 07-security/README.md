@@ -63,3 +63,21 @@ This will be implemented later (Netdata).
 - security is a continuous process
 - even basic protection is important
 - understanding threats is essential
+
+## Implementation
+
+The following tools were configured on the server:
+
+- UFW firewall
+- SSH hardening
+- Fail2Ban for brute-force protection
+
+## SSH Key Authentication
+
+Password authentication was replaced with SSH keys.
+
+This improves security by:
+
+- eliminating brute-force attacks
+- removing password-based access
+- ensuring only authorized devices can connect

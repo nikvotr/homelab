@@ -80,6 +80,24 @@ Planned services include:
 - structured storage is important
 - services can be expanded over time
 
+## Netdata (Monitoring)
+
+Netdata is used for real-time monitoring of the server.
+
+It provides:
+
+- CPU usage
+- memory usage
+- disk activity
+- network statistics
+- process monitoring
+
+The service runs on:
+
+http://SERVER-IP:19999
+
+This allows easy observation of system behavior and performance.
+
 ## Notes
 
 This is the starting point of the homelab service layer.
