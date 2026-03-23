@@ -2,6 +2,12 @@
 
 In this section, I describe basic security measures applied to my homelab server.
 
+## Overview
+
+Security is an important part of any infrastructure, even in a home environment.
+
+The goal is to reduce the attack surface and understand real-world threats.
+
 ## Why Security Matters
 
 Even a simple home server can be exposed to attacks.
@@ -22,62 +28,111 @@ Basic improvements:
 - use strong passwords
 - (future) use SSH keys instead of passwords
 
-## Firewall
+## SSH Hardening
+SSH is the primary access method to the server.
 
-I use a firewall to limit access to the system.
+The following changes were applied:
 
-Only necessary ports should be open.
+- disabled root login
+- (later) switched to SSH key authentication
+- restricted access to trusted users only
 
-Example:
+Configuration file:
 
-- SSH (22)
-- web services (e.g. 9000 for Portainer)
+/etc/ssh/sshd_config
+
+## Firewall (UFW)
+
+A firewall was configured to limit network access.
+
+Allowed ports:
+
+- 22 (SSH)
+- 9000 (Portainer)
+- 19999 (Netdata)
+- 3000 (Grafana)
+- 2222 (Cowrie honeypot)
+
+All other ports are blocked by default.
 
 ## Fail2Ban
 
-Fail2Ban protects against brute-force attacks.
+Fail2Ban was installed to protect against brute-force attacks.
 
-It monitors logs and blocks IPs after repeated failed login attempts.
+It monitors login attempts and blocks suspicious IPs.
 
-## Principle of Least Privilege
+## Honeypot (Cowrie)
 
-Only required services and ports should be enabled.
+A Cowrie SSH honeypot was deployed on port 2222.
 
-Unused services should be removed or disabled.
+It simulates a vulnerable SSH server and captures:
 
-## Monitoring
+- login attempts
+- usernames and passwords
+- executed commands
 
-Monitoring tools help detect unusual behavior.
+This allows observing attacker behavior in a controlled environment.
 
-This will be implemented later (Netdata).
+## Issues Encountered
 
-## Future Improvements
+### SSH Connection Issue
 
-- SSH key authentication
-- disable password login
-- intrusion detection tools
-- network segmentation
+At one point, SSH connections failed with:
+
+"No route to host"
+
+This was caused by a network configuration issue after reboot.
+
+The problem was resolved by restarting the system and verifying the assigned IP address.
+
+---
+
+### SSH Host Key Warning
+
+After restarting the honeypot, SSH produced:
+
+"REMOTE HOST IDENTIFICATION HAS CHANGED"
+
+This happened because the honeypot generates a new SSH key on each restart.
+
+Solution:
+
+ssh-keygen -f ~/.ssh/known_hosts -R "[SERVER-IP]:2222"
+
+---
+
+### Docker Volume Misconfiguration
+
+Initially, the honeypot failed with errors like:
+
+"No such file or directory: /var/lib/cowrie/..."
+
+This was caused by incorrect volume mapping.
+
+Fix:
+
+./data:/var/lib/cowrie
+
+---
+
+### Missing Directories
+
+Even after fixing the volume, Cowrie failed due to missing directories.
+
+Solution:
+
+- created required folders manually
+- adjusted permissions
+
+---
 
 ## Key Takeaways
 
-- security is a continuous process
-- even basic protection is important
-- understanding threats is essential
+- security is not optional, even in a homelab
+- understanding errors is part of learning
+- proper configuration prevents real vulnerabilities
+- observing attacks provides valuable insight
 
-## Implementation
+## Notes
 
-The following tools were configured on the server:
-
-- UFW firewall
-- SSH hardening
-- Fail2Ban for brute-force protection
-
-## SSH Key Authentication
-
-Password authentication was replaced with SSH keys.
-
-This improves security by:
-
-- eliminating brute-force attacks
-- removing password-based access
-- ensuring only authorized devices can connect
+This setup focuses on learning practical cybersecurity concepts through real implementation.

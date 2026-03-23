@@ -1,54 +1,59 @@
 # Homelab Cybersecurity Project
 
-This repository documents my personal homelab journey.
+This repository documents the setup and evolution of my personal homelab.
 
-The goal of this project is to learn Linux, networking, Docker, self-hosting, and cybersecurity through hands-on practice.
+The goal of this project is to learn:
+
+- system administration
+- networking
+- cybersecurity
+- containerization (Docker)
+- monitoring and infrastructure
 
 ## Hardware
 
-- CPU: Intel Core i3-4430
-- RAM: 6GB DDR3
-- OS disk: 240GB SSD
-- Data disk: 2TB HDD
-- Extra disk: 160GB HDD
-- GPU: AMD Radeon HD 7750
+- Intel i3-4430
+- 6GB RAM
+- 240GB SSD (OS)
+- 2TB HDD (data)
+- 160GB HDD (unused)
 
-## Current Setup
+## Architecture
 
-- Ubuntu Server 24.04 LTS
-- SSH access
-- Docker
-- Portainer
-- Separate data disk mounted at `/srv/data`
+- OS: Ubuntu Server 24.04 LTS
+- Remote access: SSH
+- Containerization: Docker
+- Data storage: /srv/data
+- Services: Portainer, Netdata, Cowrie (honeypot)
 
-## Project Goals
+## Features
 
-- Build a stable homelab from scratch
-- Document the full installation process in English
-- Learn infrastructure and security by doing
-- Use this repository as both documentation and portfolio
+- Headless server (no GUI)
+- Static IP configuration
+- SSH key authentication
+- Firewall (UFW)
+- Fail2Ban protection
+- Docker-based services
+- Real-time monitoring (Netdata)
+- Honeypot for attack analysis (Cowrie)
 
-## Repository Structure
+## Project Structure
 
-- `01-intro` — project overview and goals
-- `02-hardware` — hardware used in this homelab
-- `03-installation` — Ubuntu installation and base setup
-- `04-storage` — disk layout and mounting
-- `05-docker` — Docker installation and configuration
-- `06-services` — deployed services
-- `07-security` — SSH hardening, firewall, and security notes
+- 01-intro → project overview
+- 02-hardware → hardware details
+- 03-installation → OS installation
+- 04-storage → disk configuration
+- 05-docker → Docker setup
+- 06-services → deployed services
+- 07-security → security configuration
 
-## Why I Built This
+## Goals
 
-I want to study cybersecurity, and I believe the best way to learn is to build and manage real systems.
+- build real-world infrastructure knowledge
+- practice cybersecurity concepts
+- document everything clearly
+- create a portfolio project for university
 
-This homelab helps me practice:
-- system administration
-- networking
-- service deployment
-- monitoring
-- security basics
+## Notes
 
-## Status
-
-Work in progress.
+This homelab is designed for learning and experimentation, not production use.
